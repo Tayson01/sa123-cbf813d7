@@ -227,6 +227,15 @@ export default function CoverageMap() {
     apply();
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse) and (max-width: 1023px)");
+    const u = () => setTouch(mq.matches);
+    u();
+    mq.addEventListener("change", u);
+    return () => mq.removeEventListener("change", u);
+  }, []);
+  const compact = touch && !fullscreen;
   }, [snap, fullscreen]);
 
   const onHandleDown = (e: React.PointerEvent) => {
