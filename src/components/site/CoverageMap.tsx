@@ -199,6 +199,15 @@ export default function CoverageMap() {
   const [locating, setLocating] = useState(false);
   const [geoError, setGeoError] = useState<string | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse) and (max-width: 1023px)");
+    const u = () => setTouch(mq.matches);
+    u();
+    mq.addEventListener("change", u);
+    return () => mq.removeEventListener("change", u);
+  }, []);
+  const compact = touch && !fullscreen;
   const [lockHint, setLockHint] = useState(false);
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -397,7 +406,7 @@ export default function CoverageMap() {
               mapRef.current = m;
             }}
             onZoom={setZoom}
-            lock={!fullscreen}
+            lock={compact}
             onLockHint={showLockHint}
           />
 
