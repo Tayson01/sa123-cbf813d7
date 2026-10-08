@@ -104,10 +104,19 @@ function etaFor(km: number) {
   return `${Math.round(12 + road * 0.95)}–${Math.round(18 + road * 1.4)} min`;
 }
 
-function MapEvents({ picking, onPick }: { picking: boolean; onPick: (p: LatLngTuple) => void }) {
+function MapEvents({
+  picking,
+  onPick,
+  onTap,
+}: {
+  picking: boolean;
+  onPick: (p: LatLngTuple) => void;
+  onTap?: () => void;
+}) {
   useMapEvents({
     click(e) {
       if (picking) onPick([e.latlng.lat, e.latlng.lng]);
+      else onTap?.();
     },
   });
   return null;
@@ -229,30 +238,49 @@ export default function CoverageMap() {
   const wrapH = () => wrapRef.current?.clientHeight ?? 560;
   const snapH = useCallback((i: number) => Math.round(wrapH() * (SNAPS[i] ?? SNAPS[0]!)), []);
 
+  const [hidden, setHidden] = useState(false);
+  const movedRef = useRef(false);
+  const HIDDEN_H = 56;
+
   useEffect(() => {
     const apply = () =>
-      setSheetH(Math.round((wrapRef.current?.clientHeight ?? 560) * (SNAPS[snap] ?? SNAPS[0]!)));
+      setSheetH(
+        hidden
+          ? HIDDEN_H
+          : Math.round((wrapRef.current?.clientHeight ?? 560) * (SNAPS[snap] ?? SNAPS[0]!)),
+      );
 
     apply();
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
-  }, [snap, fullscreen]);
+  }, [snap, fullscreen, hidden]);
 
   const onHandleDown = (e: React.PointerEvent) => {
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    movedRef.current = false;
     dragRef.current = { y: e.clientY, h: sheetH ?? snapH(snap) };
     setDragging(true);
   };
   const onHandleMove = (e: React.PointerEvent) => {
     if (!dragRef.current) return;
+    if (Math.abs(dragRef.current.y - e.clientY) > 6) movedRef.current = true;
+    if (!movedRef.current) return;
     const next = dragRef.current.h + (dragRef.current.y - e.clientY);
-    setSheetH(Math.max(snapH(0) - 24, Math.min(snapH(2) + 24, next)));
+    setSheetH(Math.max(HIDDEN_H, Math.min(snapH(2) + 24, next)));
   };
   const onHandleUp = () => {
     if (!dragRef.current) return;
     dragRef.current = null;
     setDragging(false);
+    if (!movedRef.current) return;
+    setTimeout(() => (movedRef.current = false), 0);
     const h = sheetH ?? snapH(snap);
+    if (h < snapH(0) - 30) {
+      setHidden(true);
+      setSheetH(HIDDEN_H);
+      return;
+    }
+    setHidden(false);
     let best = 0;
     SNAPS.forEach((_, i) => {
       if (Math.abs(snapH(i) - h) < Math.abs(snapH(best) - h)) best = i;
