@@ -439,6 +439,7 @@ export default function CoverageMap() {
           />
 
           <MapEvents
+            onTap={() => setHidden(true)}
             picking={picking}
             onPick={(p) => {
               setPick(p);
