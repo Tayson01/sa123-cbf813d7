@@ -681,27 +681,33 @@ export default function CoverageMap() {
             style={sheetStyle}
           >
             {/* mâner */}
-            {compact ? (
-              <div className="h-2.5 shrink-0" />
-            ) : (
-              <div
-                role="button"
-                tabIndex={0}
-                aria-label="Trage pentru a extinde panoul"
-                onPointerDown={onHandleDown}
-                onPointerMove={onHandleMove}
-                onPointerUp={onHandleUp}
-                onPointerCancel={onHandleUp}
-                onClick={() => {
-                  const next = snap === 2 ? 0 : snap + 1;
-                  setSnap(next);
-                  setSheetH(snapH(next));
-                }}
-                className="flex shrink-0 cursor-grab touch-none items-center justify-center py-2.5 active:cursor-grabbing"
-              >
-                <span className="h-1.5 w-11 rounded-full bg-white/35" />
-              </div>
-            )}
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label={hidden ? "Ridică panoul" : "Trage pentru a extinde sau coborî panoul"}
+              onPointerDown={onHandleDown}
+              onPointerMove={onHandleMove}
+              onPointerUp={onHandleUp}
+              onPointerCancel={onHandleUp}
+              onClick={() => {
+                if (movedRef.current) return;
+                if (hidden) {
+                  setHidden(false);
+                  return;
+                }
+                const next = snap === 2 ? 0 : snap + 1;
+                setSnap(next);
+                setSheetH(snapH(next));
+              }}
+              className="flex shrink-0 cursor-grab touch-none flex-col items-center justify-center gap-1 py-2.5 active:cursor-grabbing"
+            >
+              <span className="h-1.5 w-11 rounded-full bg-white/35" />
+              {hidden && (
+                <span className="text-[11px] font-bold uppercase tracking-wide text-white/70">
+                  Zone deservite · ridică
+                </span>
+              )}
+            </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {measuredKm !== null ? (
