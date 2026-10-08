@@ -104,10 +104,19 @@ function etaFor(km: number) {
   return `${Math.round(12 + road * 0.95)}–${Math.round(18 + road * 1.4)} min`;
 }
 
-function MapEvents({ picking, onPick }: { picking: boolean; onPick: (p: LatLngTuple) => void }) {
+function MapEvents({
+  picking,
+  onPick,
+  onTap,
+}: {
+  picking: boolean;
+  onPick: (p: LatLngTuple) => void;
+  onTap?: () => void;
+}) {
   useMapEvents({
     click(e) {
       if (picking) onPick([e.latlng.lat, e.latlng.lng]);
+      else onTap?.();
     },
   });
   return null;
@@ -229,30 +238,49 @@ export default function CoverageMap() {
   const wrapH = () => wrapRef.current?.clientHeight ?? 560;
   const snapH = useCallback((i: number) => Math.round(wrapH() * (SNAPS[i] ?? SNAPS[0]!)), []);
 
+  const [hidden, setHidden] = useState(false);
+  const movedRef = useRef(false);
+  const HIDDEN_H = 56;
+
   useEffect(() => {
     const apply = () =>
-      setSheetH(Math.round((wrapRef.current?.clientHeight ?? 560) * (SNAPS[snap] ?? SNAPS[0]!)));
+      setSheetH(
+        hidden
+          ? HIDDEN_H
+          : Math.round((wrapRef.current?.clientHeight ?? 560) * (SNAPS[snap] ?? SNAPS[0]!)),
+      );
 
     apply();
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
-  }, [snap, fullscreen]);
+  }, [snap, fullscreen, hidden]);
 
   const onHandleDown = (e: React.PointerEvent) => {
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    movedRef.current = false;
     dragRef.current = { y: e.clientY, h: sheetH ?? snapH(snap) };
     setDragging(true);
   };
   const onHandleMove = (e: React.PointerEvent) => {
     if (!dragRef.current) return;
+    if (Math.abs(dragRef.current.y - e.clientY) > 6) movedRef.current = true;
+    if (!movedRef.current) return;
     const next = dragRef.current.h + (dragRef.current.y - e.clientY);
-    setSheetH(Math.max(snapH(0) - 24, Math.min(snapH(2) + 24, next)));
+    setSheetH(Math.max(HIDDEN_H, Math.min(snapH(2) + 24, next)));
   };
   const onHandleUp = () => {
     if (!dragRef.current) return;
     dragRef.current = null;
     setDragging(false);
+    if (!movedRef.current) return;
+    setTimeout(() => (movedRef.current = false), 0);
     const h = sheetH ?? snapH(snap);
+    if (h < snapH(0) - 30) {
+      setHidden(true);
+      setSheetH(HIDDEN_H);
+      return;
+    }
+    setHidden(false);
     let best = 0;
     SNAPS.forEach((_, i) => {
       if (Math.abs(snapH(i) - h) < Math.abs(snapH(best) - h)) best = i;
@@ -411,6 +439,7 @@ export default function CoverageMap() {
           />
 
           <MapEvents
+            onTap={() => setHidden(true)}
             picking={picking}
             onPick={(p) => {
               setPick(p);
@@ -681,27 +710,33 @@ export default function CoverageMap() {
             style={sheetStyle}
           >
             {/* mâner */}
-            {compact ? (
-              <div className="h-2.5 shrink-0" />
-            ) : (
-              <div
-                role="button"
-                tabIndex={0}
-                aria-label="Trage pentru a extinde panoul"
-                onPointerDown={onHandleDown}
-                onPointerMove={onHandleMove}
-                onPointerUp={onHandleUp}
-                onPointerCancel={onHandleUp}
-                onClick={() => {
-                  const next = snap === 2 ? 0 : snap + 1;
-                  setSnap(next);
-                  setSheetH(snapH(next));
-                }}
-                className="flex shrink-0 cursor-grab touch-none items-center justify-center py-2.5 active:cursor-grabbing"
-              >
-                <span className="h-1.5 w-11 rounded-full bg-white/35" />
-              </div>
-            )}
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label={hidden ? "Ridică panoul" : "Trage pentru a extinde sau coborî panoul"}
+              onPointerDown={onHandleDown}
+              onPointerMove={onHandleMove}
+              onPointerUp={onHandleUp}
+              onPointerCancel={onHandleUp}
+              onClick={() => {
+                if (movedRef.current) return;
+                if (hidden) {
+                  setHidden(false);
+                  return;
+                }
+                const next = snap === 2 ? 0 : snap + 1;
+                setSnap(next);
+                setSheetH(snapH(next));
+              }}
+              className="flex shrink-0 cursor-grab touch-none flex-col items-center justify-center gap-1 py-2.5 active:cursor-grabbing"
+            >
+              <span className="h-1.5 w-11 rounded-full bg-white/35" />
+              {hidden && (
+                <span className="text-[11px] font-bold uppercase tracking-wide text-white/70">
+                  Zone deservite · ridică
+                </span>
+              )}
+            </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {measuredKm !== null ? (
