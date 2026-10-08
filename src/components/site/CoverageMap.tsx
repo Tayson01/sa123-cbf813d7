@@ -156,50 +156,22 @@ function MapApi({
     };
   }, [map, onReady, onZoom]);
 
-  /* Pe touch: un deget = scroll în pagină, două degete = mișcă harta.
-     În fullscreen harta se mișcă normal cu un deget. */
+  /* Pe telefon, în pagină: harta e fixă ca degetul să deruleze pagina.
+     În ecran complet harta se mișcă normal. */
   useEffect(() => {
-    const coarse =
-      typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
-    if (!coarse) return;
-
     const el = map.getContainer();
-
-    if (!lock) {
+    if (lock) {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      el.style.touchAction = "pan-y";
+    } else {
       map.dragging.enable();
-      el.style.touchAction = "none";
-      return () => {
-        el.style.touchAction = "";
-      };
-    }
-
-    map.dragging.disable();
-    el.style.touchAction = "pan-y";
-
-    const onStart = (e: TouchEvent) => {
-      if (e.touches.length >= 2) map.dragging.enable();
-      else map.dragging.disable();
-    };
-    const onMove = (e: TouchEvent) => {
-      if (e.touches.length < 2) onLockHint();
-    };
-    const onEnd = () => {
-      if (map.dragging.enabled()) map.dragging.disable();
-    };
-
-    el.addEventListener("touchstart", onStart, { passive: true });
-    el.addEventListener("touchmove", onMove, { passive: true });
-    el.addEventListener("touchend", onEnd, { passive: true });
-    el.addEventListener("touchcancel", onEnd, { passive: true });
-
-    return () => {
-      el.removeEventListener("touchstart", onStart);
-      el.removeEventListener("touchmove", onMove);
-      el.removeEventListener("touchend", onEnd);
-      el.removeEventListener("touchcancel", onEnd);
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
       el.style.touchAction = "";
-      map.dragging.enable();
-    };
+    }
+    void onLockHint;
   }, [map, lock, onLockHint]);
 
   return null;
@@ -227,6 +199,15 @@ export default function CoverageMap() {
   const [locating, setLocating] = useState(false);
   const [geoError, setGeoError] = useState<string | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse) and (max-width: 1023px)");
+    const u = () => setTouch(mq.matches);
+    u();
+    mq.addEventListener("change", u);
+    return () => mq.removeEventListener("change", u);
+  }, []);
+  const compact = touch && !fullscreen;
   const [lockHint, setLockHint] = useState(false);
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -425,7 +406,7 @@ export default function CoverageMap() {
               mapRef.current = m;
             }}
             onZoom={setZoom}
-            lock={!fullscreen}
+            lock={compact}
             onLockHint={showLockHint}
           />
 
