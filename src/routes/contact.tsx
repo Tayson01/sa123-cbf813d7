@@ -1,20 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { Btn, SectionLabel } from "@/components/site/ui";
 import { ContactForm } from "@/components/site/ContactForm";
-import { ADDRESS, EMAIL, MAPS, PHONE, TEL, WA } from "@/lib/site-data";
+import { ADDRESS, MAPS, PHONE, TEL, WA } from "@/lib/site-data";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Vulcanizare mobilă Constanța, non-stop" },
+      { title: "Contact — Vulcanizare Autorun, non-stop" },
       {
         name: "description",
         content:
-          "Sună la 0777 777 777 sau trimite locația pe WhatsApp. Vulcanizare mobilă în Constanța, disponibili 24/7, Șos. Mangaliei 126 B.",
+          "Sună la 0725 471 288 sau trimite locația pe WhatsApp. Vulcanizare mobilă în Constanța, disponibili 24/7, Șos. Mangaliei 126 B.",
       },
-      { property: "og:title", content: "Contact — Vulcanizare mobilă Constanța" },
+      { property: "og:title", content: "Contact — Vulcanizare Autorun" },
       {
         property: "og:description",
         content: "Telefon, WhatsApp cu locație și adresă — intervenții non-stop în Constanța.",
@@ -45,14 +45,6 @@ function ContactPage() {
             <Phone className="size-5 text-brand" />
             <p className="mt-4 text-xs font-semibold text-muted-foreground">Telefon · WhatsApp</p>
             <p className="text-lg font-bold">{PHONE}</p>
-          </a>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="rounded-3xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:shadow-card"
-          >
-            <Mail className="size-5 text-brand" />
-            <p className="mt-4 text-xs font-semibold text-muted-foreground">Email</p>
-            <p className="text-lg font-bold break-all">{EMAIL}</p>
           </a>
           <a
             href={MAPS}

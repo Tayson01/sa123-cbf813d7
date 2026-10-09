@@ -6,13 +6,13 @@ import { faqs } from "@/lib/site-data";
 export const Route = createFileRoute("/intrebari-frecvente")({
   head: () => ({
     meta: [
-      { title: "Întrebări frecvente — Vulcanizare mobilă Constanța" },
+      { title: "Întrebări frecvente — Vulcanizare Autorun" },
       {
         name: "description",
         content:
           "Prețuri, timpi de sosire, servicii pe loc, plata cu cardul și intervenții pentru camioane — răspunsuri clare despre vulcanizarea mobilă în Constanța.",
       },
-      { property: "og:title", content: "Întrebări frecvente — Vulcanizare mobilă Constanța" },
+      { property: "og:title", content: "Întrebări frecvente — Vulcanizare Autorun" },
       {
         property: "og:description",
         content: "Tot ce vrei să știi înainte să suni: prețuri, timpi de sosire și servicii disponibile.",
