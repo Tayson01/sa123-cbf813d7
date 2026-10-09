@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 
 import { Btn, BtnLink } from "@/components/site/ui";
-import serviceVan from "@/assets/autorun-service-van.jpg";
+import serviceVan from "@/assets/autorun-branded-van.webp.asset.json";
+import serviceVanMobile from "@/assets/autorun-branded-van-mobile.webp.asset.json";
 import { CoverageMapSection } from "@/components/site/CoverageMapSection";
 import { ServicesSection } from "@/components/site/ServicesSection";
 import { FAQSection } from "@/components/site/FAQSection";
@@ -65,9 +66,12 @@ function Index() {
     <main>
       {/* Hero */}
       <section id="top" className="relative overflow-hidden">
-        <img src={serviceVan} alt="Imagine ilustrativă cu o dubă echipată pentru vulcanizare mobilă, pe litoral" width={1536} height={1024} className="absolute inset-x-0 bottom-0 h-52 w-full object-cover object-right md:inset-0 md:h-full" fetchPriority="high" />
-        <div className="autorun-hero-shade absolute inset-x-0 bottom-0 h-52 md:inset-0 md:h-full" aria-hidden="true" />
-        <div className="relative mx-auto max-w-6xl px-5 pb-52 pt-8 sm:pt-14 md:pb-14 md:pt-16">
+        <picture>
+          <source media="(max-width: 767px)" srcSet={serviceVanMobile.url} />
+          <img src={serviceVan.url} alt="Dubă de vulcanizare mobilă cu inscripțiile Autorun și numărul 0725 471 288" width={1537} height={1023} className="absolute inset-x-0 top-0 h-60 w-full object-cover object-right sm:h-80 md:inset-0 md:h-full" fetchPriority="high" />
+        </picture>
+        <div className="autorun-hero-shade absolute inset-x-0 top-0 h-60 sm:h-80 md:inset-0 md:h-full" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-5 pb-7 pt-60 sm:pt-80 md:pb-14 md:pt-16">
           <div className="max-w-xl md:max-w-[48%]">
             <div className="animate-rise">
               <span className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-card/80 px-3 py-1.5 text-[11px] font-semibold text-muted-foreground shadow-card backdrop-blur sm:px-3.5 sm:text-xs">
@@ -78,16 +82,16 @@ function Index() {
                 Disponibili 24/7 în Constanța și împrejurimi
               </span>
 
-              <h1 className="mt-5 text-[2.1rem] font-black leading-[1.06] sm:text-5xl md:leading-[1.02]">
+              <h1 className="mt-4 text-[2.1rem] font-black leading-[1.06] sm:text-5xl md:leading-[1.02]">
                 Vulcanizare <span className="text-brand">Autorun</span>
               </h1>
 
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
+              <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
                 Vulcanizare mobilă în Constanța. Asistență non-stop, reparații pe loc și intervenții pe
                 A2, A4 și litoral. Ajungem la tine în cel mai scurt timp.
               </p>
 
-              <div className="mt-6 grid gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
+              <div className="mt-5 grid gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
                 <Btn href={`tel:${TEL}`} className="min-h-14 w-full text-base shadow-glow sm:min-h-0 sm:w-auto sm:text-sm">
                   <Phone className="size-5 sm:size-4" /> Sună: {PHONE}
                 </Btn>
@@ -101,7 +105,7 @@ function Index() {
                 </div>
               </div>
 
-              <dl className="mt-7 grid max-w-xl grid-cols-3 gap-2 sm:mt-10 sm:gap-3">
+              <dl className="mt-5 grid max-w-xl grid-cols-3 gap-2 sm:mt-10 sm:gap-3">
                 {[
                   { icon: Clock, k: "< 20 min", v: "timp de răspuns" },
                   { icon: MapPin, k: "40 km", v: "rază acoperire" },
