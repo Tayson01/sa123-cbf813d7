@@ -7,6 +7,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.autorun-hero-shade {
+  background: linear-gradient(to bottom, var(--background), transparent 25%);
+}
+
+@media (min-width: 768px) {
+  .autorun-hero-shade {
+    background: linear-gradient(to right, var(--background) 0%, color-mix(in oklab, var(--background) 96%, transparent) 35%, color-mix(in oklab, var(--background) 75%, transparent) 46%, transparent 65%);
+  }
+}
+
 /*
  * Design system definition.
  *

@@ -7,8 +7,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import { Btn, BtnLink, SectionLabel } from "@/components/site/ui";
-import logo from "@/assets/autorun-logo.png.asset.json";
+import { Btn, BtnLink } from "@/components/site/ui";
+import serviceVan from "@/assets/autorun-service-van.jpg";
 import { CoverageMapSection } from "@/components/site/CoverageMapSection";
 import { ServicesSection } from "@/components/site/ServicesSection";
 import { FAQSection } from "@/components/site/FAQSection";
@@ -65,10 +65,11 @@ function Index() {
     <main>
       {/* Hero */}
       <section id="top" className="relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-5 pb-14 pt-8 sm:pt-14 md:pb-20 md:pt-24">
-          <div className="mx-auto max-w-3xl">
+        <img src={serviceVan} alt="Imagine ilustrativă cu o dubă echipată pentru vulcanizare mobilă, pe litoral" width={1536} height={1024} className="absolute inset-x-0 bottom-0 h-52 w-full object-cover object-right md:inset-0 md:h-full" fetchPriority="high" />
+        <div className="autorun-hero-shade absolute inset-x-0 bottom-0 h-52 md:inset-0 md:h-full" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-5 pb-52 pt-8 sm:pt-14 md:pb-14 md:pt-16">
+          <div className="max-w-xl md:max-w-[48%]">
             <div className="animate-rise">
-              <img src={logo.url} alt="Autorun — Vulcanizare mobilă" width={1060} height={260} className="mb-7 h-auto w-full max-w-lg rounded bg-brand-foreground p-3" fetchPriority="high" />
               <span className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-card/80 px-3 py-1.5 text-[11px] font-semibold text-muted-foreground shadow-card backdrop-blur sm:px-3.5 sm:text-xs">
                 <span className="relative flex size-2">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-70" />
@@ -77,7 +78,7 @@ function Index() {
                 Disponibili 24/7 în Constanța și împrejurimi
               </span>
 
-              <h1 className="mt-5 text-[2.1rem] font-black leading-[1.06] tracking-tight sm:text-5xl md:text-[4.1rem] md:leading-[1.02]">
+              <h1 className="mt-5 text-[2.1rem] font-black leading-[1.06] sm:text-5xl md:leading-[1.02]">
                 Vulcanizare <span className="text-brand">Autorun</span>
               </h1>
 
