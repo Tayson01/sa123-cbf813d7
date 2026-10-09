@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, Phone, Send } from "lucide-react";
 
-import { TEL, WA } from "@/lib/site-data";
+import { PHONE, TEL, WA } from "@/lib/site-data";
 
 export function MobileActionBar() {
   return (
@@ -17,17 +17,18 @@ export function MobileActionBar() {
         <div className="grid grid-cols-3 gap-2">
           <a
             href={`tel:${TEL}`}
-            className="flex min-h-13 flex-col items-center justify-center gap-1 rounded-2xl bg-brand text-brand-foreground shadow-glow active:scale-[0.97]"
+            className="flex min-h-13 flex-col items-center justify-center gap-0.5 rounded-2xl bg-brand text-brand-foreground shadow-glow active:scale-[0.97]"
           >
-            <Phone className="size-5" />
-            <span className="text-[11px] font-bold">Sună acum</span>
+            <Phone className="size-4" />
+            <span className="text-[13px] font-black tracking-tight">{PHONE}</span>
           </a>
           <a
             href={WA}
-            className="flex min-h-13 flex-col items-center justify-center gap-1 rounded-2xl border border-border bg-card text-foreground active:scale-[0.97]"
+            className="flex min-h-13 flex-col items-center justify-center gap-0.5 rounded-2xl border border-border bg-card text-foreground active:scale-[0.97]"
           >
-            <MessageCircle className="size-5 text-brand" />
-            <span className="text-[11px] font-semibold">WhatsApp</span>
+            <MessageCircle className="size-4 text-brand" />
+            <span className="text-[11px] font-bold">WhatsApp</span>
+            <span className="text-[9px] font-semibold text-muted-foreground">{PHONE}</span>
           </a>
           <Link
             to="/contact"
