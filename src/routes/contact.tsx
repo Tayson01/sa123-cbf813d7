@@ -8,13 +8,13 @@ import { ADDRESS, EMAIL, MAPS, PHONE, TEL, WA } from "@/lib/site-data";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Vulcanizare mobilă Constanța, non-stop" },
+      { title: "Contact — Vulcanizare Autorun, non-stop" },
       {
         name: "description",
         content:
-          "Sună la 0777 777 777 sau trimite locația pe WhatsApp. Vulcanizare mobilă în Constanța, disponibili 24/7, Șos. Mangaliei 126 B.",
+          "Sună la 0725 471 288 sau trimite locația pe WhatsApp. Vulcanizare mobilă în Constanța, disponibili 24/7, Șos. Mangaliei 126 B.",
       },
-      { property: "og:title", content: "Contact — Vulcanizare mobilă Constanța" },
+      { property: "og:title", content: "Contact — Vulcanizare Autorun" },
       {
         property: "og:description",
         content: "Telefon, WhatsApp cu locație și adresă — intervenții non-stop în Constanța.",

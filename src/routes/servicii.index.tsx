@@ -8,13 +8,13 @@ import { PHONE, TEL, WA, services } from "@/lib/site-data";
 export const Route = createFileRoute("/servicii/")({
   head: () => ({
     meta: [
-      { title: "Servicii vulcanizare mobilă Constanța — listă completă" },
+      { title: "Servicii — Vulcanizare Autorun — listă completă" },
       {
         name: "description",
         content:
           "Toate serviciile noastre mobile în Constanța: asistență rutieră 24/7, reparație pană pe loc, montaj la domiciliu, echilibrare roți, camioane și transport auto.",
       },
-      { property: "og:title", content: "Servicii vulcanizare mobilă Constanța" },
+      { property: "og:title", content: "Servicii — Vulcanizare Autorun" },
       {
         property: "og:description",
         content: "Asistență rutieră, reparații pe loc, montaj la domiciliu, echilibrare roți și camioane.",

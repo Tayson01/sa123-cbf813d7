@@ -83,21 +83,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Vulcanizare Mobilă Constanța Non-Stop 24/7" },
-      {
-        name: "description",
-        content:
-          "A",
-      },
-      { property: "og:site_name", content: "Vulcanizare Mobilă Constanța" },
+      { property: "og:site_name", content: "Vulcanizare Autorun" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Vulcanizare Mobilă Constanța Non-Stop 24/7" },
-      { name: "twitter:title", content: "Vulcanizare Mobilă Constanța Non-Stop 24/7" },
-      { property: "og:description", content: "Ai făcut pană? Venim rapid la tine în Constanța, A2, A4 și împrejurimi! Intervenții rapide 24/7, reparații pe loc și montaj la domiciliu. Sună acum!" },
-      { name: "twitter:description", content: "Ai făcut pană? Venim rapid la tine în Constanța, A2, A4 și împrejurimi! Intervenții rapide 24/7, reparații pe loc și montaj la domiciliu. Sună acum!" },
-      { property: "og:image", content: "https://i.postimg.cc/N0gyZcDb/Chat-GPT-Image-Aug-18-2026-06-46-32-AM.png" },
-      { name: "twitter:image", content: "https://i.postimg.cc/N0gyZcDb/Chat-GPT-Image-Aug-18-2026-06-46-32-AM.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

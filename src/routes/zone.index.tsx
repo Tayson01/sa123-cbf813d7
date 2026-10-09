@@ -8,13 +8,13 @@ import { zones } from "@/lib/site-data";
 export const Route = createFileRoute("/zone/")({
   head: () => ({
     meta: [
-      { title: "Zone deservite — Vulcanizare mobilă Constanța și litoral" },
+      { title: "Zone deservite — Vulcanizare Autorun și litoral" },
       {
         name: "description",
         content:
           "Acoperim Constanța, Mamaia, Năvodari, Agigea, A2/A4, Ovidiu, Eforie, Techirghiol și Mangalia. Vezi harta de acoperire și timpii de sosire.",
       },
-      { property: "og:title", content: "Zone deservite — Vulcanizare mobilă Constanța" },
+      { property: "og:title", content: "Zone deservite — Vulcanizare Autorun" },
       {
         property: "og:description",
         content: "Hartă de acoperire cu timpi estimați de sosire în Constanța și pe litoral.",

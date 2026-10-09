@@ -14,8 +14,8 @@ export const Route = createFileRoute("/zone/$slug")({
   head: ({ loaderData }) => {
     const z = loaderData?.zone;
     const title = z
-      ? `Vulcanizare mobilă ${z.name} — sosire ${z.etaMinutes}`
-      : "Zonă deservită — Vulcanizare Mobilă Constanța";
+      ? `Vulcanizare ${z.name} — Autorun`
+      : "Zonă deservită — Vulcanizare Autorun";
     const description = z
       ? `${z.desc} Timp estimat de sosire: ${z.etaMinutes}. Intervenții 24/7, sună la ${PHONE}.`
       : "Zone deservite de vulcanizarea mobilă din Constanța.";
