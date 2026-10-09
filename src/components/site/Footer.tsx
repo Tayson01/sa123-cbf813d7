@@ -1,8 +1,8 @@
 import logo from "@/assets/autorun-logo.png.asset.json";
 import { Link } from "@tanstack/react-router";
-import { Phone, MessageCircle, MapPin, Mail } from "lucide-react";
+import { Phone, MessageCircle, MapPin } from "lucide-react";
 
-import { PHONE, TEL, EMAIL, ADDRESS, WA, services, zones } from "@/lib/site-data";
+import { PHONE, TEL, ADDRESS, WA, services, zones } from "@/lib/site-data";
 
 export function Footer() {
   return (
@@ -61,11 +61,6 @@ export function Footer() {
               <li>
                 <a href={WA} className="inline-flex items-center gap-2 hover:text-foreground">
                   <MessageCircle className="size-4 text-brand" /> WhatsApp
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-2 hover:text-foreground">
-                  <Mail className="size-4 text-brand" /> {EMAIL}
                 </a>
               </li>
             </ul>
